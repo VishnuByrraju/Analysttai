@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
-client = MongoClient("mongodb+srv://admin:admin@cluster1.hbxmhai.mongodb.net/")
+client = MongoClient("Your_mongodb_link")
 db = client["todolist"]
 users_collection = db["users"]
 tasks_collection = db["tasks"]
