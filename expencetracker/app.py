@@ -6,7 +6,7 @@ app = Flask(__name__)
 app.secret_key = 'my_key'
 
 # MongoDB connection
-client = MongoClient('mongodb+srv://admin:admin@cluster1.hbxmhai.mongodb.net/')
+client = MongoClient('Your_mongodb_link')
 db = client['expense_tracker']
 
 # Create collection if not exists
