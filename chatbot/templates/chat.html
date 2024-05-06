@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        #chat-container {
+            max-width: 500px;
+            margin: auto;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+        }
+        .user-message {
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="chat-container">
+        <h1 class="text-center">Chat</h1>
+        <div id="chat-messages">
+            <!-- Chat messages will be displayed here -->
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="user-message" placeholder="Type your message">
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="send-btn">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#send-btn").click(function() {
+                sendMessage();
+            });
+
+            $("#user-message").keypress(function(event) {
+                if (event.which == 13) {
+                    sendMessage();
+                }
+            });
+
+            function sendMessage() {
+                var userMessage = $("#user-message").val().trim();
+                if (userMessage != "") {
+                    displayMessage(userMessage, true);
+                    // Send the message to the server
+                    $.ajax({
+                        url: "/chat",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify({ message: userMessage }),
+                        success: function(response) {
+                            var botMessage = response.message;
+                            displayMessage(botMessage, false);
+                            $("#user-message").val(""); // Clear input
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error:", error);
+                        }
+                    });
+                }
+            }
+
+            function displayMessage(message, isUser) {
+                var messageClass = isUser ? "user-message" : "bot-message";
+                var messageHTML = '<div class="chat-message ' + messageClass + '">' + message + '</div>';
+                $("#chat-messages").append(messageHTML);
+            }
+        });
+    </script>
+</body>
+</html>

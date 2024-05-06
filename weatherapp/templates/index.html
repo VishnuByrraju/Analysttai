@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Weather App</h1>
+        <form action="/weather" method="post" class="form-inline">
+            <div class="form-group mr-2">
+                <label for="city" class="sr-only">Enter city name:</label>
+                <input type="text" name="city" id="city" class="form-control mr-2" placeholder="Enter city name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Get Weather</button>
+        </form>
+    </div>
+</body>
+</html>
